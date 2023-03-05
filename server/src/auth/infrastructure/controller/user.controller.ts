@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import UserCaseUse from "../../application/AuthCaseUse";
 import User from "../../domain/user.model";
 
+import { validate } from 'class-validator';
+
 export class ControllerUser {
   constructor(private usecase: UserCaseUse) {}
 
@@ -27,18 +29,25 @@ export class ControllerUser {
     }
   };
 
-  createUser = (req: Request, res: Response) => {
+  createUser = async (req: Request, res: Response) => {
     const { email, name, password } = req.body;
+
     try {
       const user = new User(email, name, password);
-      this.usecase
-        .createUser(user)
-        .then((item) => {
-          return res.status(200).json(item);
-        })
-        .catch((error) => {
-          return res.status(404).json(error);
-        });
+      const error = await validate(user);
+        if(error.length > 0) {
+           return res.status(404).json(error);
+        }
+        else {
+          this.usecase
+          .createUser(user)
+          .then((item) => {
+            return res.status(200).json(item);
+          })
+          .catch((error) => {
+            return res.status(404).json(error);
+          });
+        }
     } catch (error) {
       return res.status(500).json(error);
     }
