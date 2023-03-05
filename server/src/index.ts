@@ -1,6 +1,7 @@
 
 import express from 'express';
 import 'reflect-metadata';
+import userRouter from './auth/infrastructure/router/user.router';
 import{ dbconnet } from './db/data-source';
 
 const app = express();
@@ -11,8 +12,7 @@ const PORT = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.use('/api', routerAuth)
-// app.use('/user', userrouter)
+app.use('/api', userRouter)
 
 app.listen(PORT, () => {
      dbconnet.then().catch();

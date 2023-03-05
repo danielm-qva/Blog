@@ -18,6 +18,9 @@ export class Post {
   @Column()
   photoPost: string;
 
+  @Column()
+  like: Number = 0 ;
+
   @ManyToOne(() => User, (user) => user.post)
   user: User;
 }

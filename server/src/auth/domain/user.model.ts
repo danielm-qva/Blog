@@ -1,34 +1,37 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Post } from "../../post/domain/post.model";
 
 @Entity()
 export class User {
+  constructor(
+    email: string,
+    name: string,
+    password: string,
+    isActive?: boolean
+  ) {
+    this.email = email;
+    this.name = name;
+    this.password = password;
+    this.isActive = isActive ?? true;
+  }
 
-    constructor(email: string, name: string, password: string) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
+  @PrimaryGeneratedColumn()
+  id!: number;
 
+  @Column()
+  email: string;
 
-    @PrimaryGeneratedColumn()
-    id!: Number;
+  @Column()
+  name: string;
 
-    @Column()
-    email: string;
+  @Column()
+  password: string;
 
-    @Column()
-    name: string;
+  @Column({ default: true })
+  isActive!: boolean;
 
-    @Column()
-    password: string;
-
-    @Column({ default: false })
-    isActive: boolean = false;
-
-    @OneToMany(() => Post, (post) => post.user)
-    post!: Post[];
+  @OneToMany(() => Post, (post) => post.user)
+  post!: Post[];
 }
 
 export default User;
