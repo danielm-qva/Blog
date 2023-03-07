@@ -10,6 +10,9 @@ export class SqlPostgresRepoPost implements RepositoryPost {
   async updatePost(id: number, body: Object): Promise<any> {
     return await ManagerRepositoryPost.update(id, body);
   }
+  async AllPost():Promise<any> {
+    return await ManagerRepositoryPost.find();
+  }
 }
 
 export default SqlPostgresRepoPost;

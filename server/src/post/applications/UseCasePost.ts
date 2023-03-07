@@ -13,4 +13,7 @@ export class PostUseCase {
        updatePost = async (id:number , bodyupdate: Object) => {
              return await this.postRepo.updatePost(id ,bodyupdate);
        }
+        findAllPost = async () => {
+             return await this.postRepo.AllPost();
+        }
 }

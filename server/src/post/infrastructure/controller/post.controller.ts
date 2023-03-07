@@ -45,4 +45,13 @@ export class ControllerPost {
       return res.status(500).json(error);
     }
   };
+   public getAllPost =async (req: Request , res: Response) => {
+       try {
+          this.repo.findAllPost().then(item => { 
+             res.status(200).json(item);
+          })
+       } catch (error) {
+        
+       }
+   }
 }

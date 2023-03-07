@@ -10,6 +10,7 @@ const controllerPost = new ControllerPost(caseUser);
 
 routerPost.post("/post", controllerPost.createPost);
 routerPost.put('/post/:id', controllerPost.updatePost);
+routerPost.get('/post', controllerPost.getAllPost)
 
 export default routerPost;
     
