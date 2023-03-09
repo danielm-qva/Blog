@@ -24,6 +24,10 @@ export class UserCaseUse {
   async updateUser(id: number, user: User) {
     return await this.userRepo.updateUser(id, user);
   }
+
+  async loginUser(email: string ){
+     return await this.userRepo.loginUser(email);
+  }
 }
 
 

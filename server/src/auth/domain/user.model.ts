@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany , Unique } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Unique, AfterInsert, BeforeInsert } from "typeorm";
 import { Post } from "../../post/domain/post.model";
-import { IsEmail, IsString, Max, Min ,IsNotEmpty ,IsAlphanumeric, IsBoolean , IsStrongPassword } from "class-validator";
-
+import bycrypt from 'bcrypt';
+import { IsEmail, IsString, Max, Min, IsNotEmpty, IsAlphanumeric, IsBoolean, IsStrongPassword, IS_NOT_EMPTY } from "class-validator"
 @Entity()
 export class User {
   constructor(
@@ -19,7 +19,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column() 
+  @Column()
   @Unique('unique_email', ['email'])
   @IsString()
   @IsEmail()
@@ -27,10 +27,8 @@ export class User {
   email: string
 
   @Column()
-  @Unique('unique_name' , ['name'])
+  @Unique('unique_name', ['name'])
   @IsString()
-  @Max(25)
-  @Min(5)
   @IsNotEmpty()
   name: string;
 
@@ -38,7 +36,6 @@ export class User {
   @IsString()
   @IsAlphanumeric()
   @IsNotEmpty()
-  @IsStrongPassword()
   password: string;
 
   @Column({ default: true })
@@ -48,6 +45,13 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.userid)
   post!: Post[];
+
+  @BeforeInsert()
+  async save() {
+    const salt = await bycrypt.genSalt(10);
+    const hass_pasword = await bycrypt.hash(this.password, salt);
+    this.password = hass_pasword;
+  }
 
 }
 

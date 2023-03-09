@@ -31,7 +31,6 @@ export class ControllerPost {
 
   public updatePost = async (req: Request, res: Response) => {
     const { id } = req.params;
-
     try {
       this.repo
         .updatePost(parseInt(id), req.body)

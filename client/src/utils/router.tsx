@@ -24,8 +24,7 @@ const router = createBrowserRouter([
             element: <Login />
           }
         ]
-    },
-    
+    },    
   ] , {
     basename:'/'
   }) 

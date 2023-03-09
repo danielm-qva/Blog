@@ -8,6 +8,8 @@ export interface UserRepository {
     findAllUser(): Promise<User[] | []>;
     updateUser(id: number, user: User): Promise<User | null>;
     deleteUser(id: number): Promise<null>;
+    loginUser(email: string): Promise<User | null>;
+
 }
 
 

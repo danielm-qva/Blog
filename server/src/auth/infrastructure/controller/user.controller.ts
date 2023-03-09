@@ -3,7 +3,10 @@ import UserCaseUse from "../../application/AuthCaseUse";
 import User from "../../domain/user.model";
 
 import { validate } from 'class-validator';
+import { JsonWebTokenGenerate } from "../utils/JsonWebTokenGenertate";
 
+import bycrypt from 'bcrypt';
+ 
 export class ControllerUser {
   constructor(private usecase: UserCaseUse) {}
 
@@ -88,4 +91,30 @@ export class ControllerUser {
       return res.status(500).json(error);
     }
   };
+
+  loginUser = (req: Request , res: Response) => {
+        const {email , password} = req.body ;
+        try {
+          this.usecase.loginUser(email).then((ans) => {
+               if(ans !== null ) {
+                bycrypt.compare(password , ans.password).then((ass) => {
+                   if(ass){
+                     const jsonwebtoken = new JsonWebTokenGenerate(ans.email , ans.email);
+                     return res.status(200).json({"toke": jsonwebtoken.GenereateToken()});
+                   }
+                   else {
+                    res.status(404).json({'mensg' : "Ha ocurrido un Error 😢"});
+                   }
+                })
+              }
+              else {
+                res.status(404).json({'mensg' : "User not fount"});
+              }
+              }).catch(error => {
+                return res.status(404).json(error);
+              })
+          } catch (error) {
+             return res.status(500).json(error);
+          }    
+  }
 }

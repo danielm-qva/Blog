@@ -1,6 +1,7 @@
 import { Router } from "express";
 import UserCaseUse from "../../application/AuthCaseUse";
 import {ControllerUser}  from "../controller/user.controller";
+import { isAutorizado } from "../middleware/authHandle";
 import { SqlPostgresRepo } from "../repository/SqlPostgresRepository";
 
 
@@ -9,10 +10,13 @@ const caseUse = new UserCaseUse(new SqlPostgresRepo());
 const controlleruser = new ControllerUser(caseUse) ;
 
 
-userRouter.get('/user' , controlleruser.findAllUser);
-userRouter.post('/user' , controlleruser.createUser);
-userRouter.get('/user/:id' , controlleruser.findOndeUser);
-userRouter.put('/user/:id', controlleruser.updateUser);
-userRouter.delete('/user/:id' , controlleruser.deleteUser);
+userRouter.get('/user' ,isAutorizado, controlleruser.findAllUser);
+userRouter.get('/user/:id' ,isAutorizado ,controlleruser.findOndeUser);
+userRouter.put('/user/:id', isAutorizado ,controlleruser.updateUser);
+userRouter.delete('/user/:id',isAutorizado , controlleruser.deleteUser);
+
+//login 
+userRouter.post('/login' , controlleruser.loginUser);
+userRouter.post('/regiter' , controlleruser.createUser);
 
 export default userRouter;

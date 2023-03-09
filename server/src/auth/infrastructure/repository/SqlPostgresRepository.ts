@@ -23,4 +23,7 @@ export class SqlPostgresRepo implements UserRepository {
    async deleteUser(id: number): Promise<any> {
         return await ManagerRepository.delete({id: id});
    }  
+   async loginUser(email:string) {
+      return await ManagerRepository.findOneBy({email: email});
+   }
 } 
