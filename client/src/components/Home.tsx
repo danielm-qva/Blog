@@ -1,18 +1,32 @@
-import { useFecht } from "../hooks/useFecht";
 import Post from "./Post";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { setgetAllPost } from "../redux/slice/slicePost";
+import { clientAxios } from "../hooks/clientAxios";
+import { notLoadginApp, setLoadingApp } from "../redux/slice/sliceApp";
+import {BiPlus} from 'react-icons/all'
+import {store} from "../redux/store";
+import {Link} from 'react-router-dom'
 
 export default function Home() {
-  const { data ,loading } = useFecht('http://localhost:3000/api/post');
     const dispacht = useDispatch();
    
     const listPost = useSelector((store: any) => store.post.listPost);
+    const loading  = useSelector((store: any) => store.app.Loadingapp);
+    const islogin = useSelector((store: any) => store.app.statusLogin);
     
     useEffect(() => {
-          dispacht(setgetAllPost({list : data}))
-    }, [data])
+      dispacht(setLoadingApp());
+      clientAxios.get('/post').then((res) => {
+        dispacht(setgetAllPost({list : res.data}))
+          setTimeout(()=> {
+            dispacht(notLoadginApp());
+          },500)
+      }).catch(error => {
+        console.log(error);
+        dispacht(notLoadginApp());
+      })
+    }, [])
 
 
   return (
@@ -24,6 +38,17 @@ export default function Home() {
          <div className="felx">
          <p className="px-3 py-3 font-sans">Marketing / Page Sections </p>
          </div>
+        {
+            islogin ? ( 
+                <Link to={'/addpost'}>
+              <button className="px-3 py-3 bg-slate-400 rounded-2xl  inline-flex justify-center items-center hover:bg-slate-500">
+                   <BiPlus className='mr-1'/>Add Post
+               </button>
+                </Link>
+               ) 
+               : (<></>)
+        }
+
     </div>
         
       <div className="relative mb-3 w-full h-48 overflow">
@@ -47,6 +72,7 @@ export default function Home() {
               }
             </div>
       </div>
+
     </>
   )
   }

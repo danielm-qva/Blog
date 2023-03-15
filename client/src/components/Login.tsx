@@ -1,16 +1,38 @@
-import { useEffect, useState } from "react";
-import { useFormik } from 'formik';
-function Login() {
-    const [credencial , setCredencial] = useState({})
 
-   useEffect(() =>{
-    console.log(credencial);
-   }, [credencial])
+import { useFormik } from 'formik';
+import {useDispatch} from 'react-redux';
+import { clientAxios } from "../hooks/clientAxios";
+import { useNavigate ,Link } from "react-router-dom";
+import {applogin, notLoadginApp, setLoadingApp} from '../redux/slice/sliceApp'; 
+import {toast} from 'react-hot-toast' ;
+function Login() {
+    const navigate = useNavigate();
+    const dispach = useDispatch();
+
    
     const formikLogin = useFormik({
         initialValues: {email: ' ' , password: ''},
         onSubmit:(value) => {
-            setCredencial(value);
+                dispach(setLoadingApp());
+               clientAxios.post('/login' , value).then((res) => {
+                    //app login
+                    dispach(applogin({user : value.email , token: res.data.toke}));
+
+                    dispach(notLoadginApp());
+                    
+                    navigate('/home');
+                      
+                   toast.success('Login exitoso!!!' ,{
+                    icon: '😉',
+                   });
+                    
+               }).catch(error  => {
+                toast.error(error.message , {
+                    icon : '😢',
+
+                })
+                  console.log(error);
+               });
         }
     })
   
@@ -27,7 +49,7 @@ function Login() {
                     <h1 className="font-bold text-3xl text-gray-900">Login</h1>
                     <p>Enter your information to Login</p>
                 </div>
-                    
+
                     <div className="flex -mx-3">
                         <div className="w-full px-3 mb-5">
                             <label className="text-xs font-semibold px-1">Email</label>
@@ -52,13 +74,16 @@ function Login() {
                         <div className="w-full px-3 mb-5">
                             <button className="block w-full max-w-xs mx-auto bg-gray-600 hover:bg-gray-500  text-white rounded-lg px-3 py-3 font-semibold">LOGIN NOW</button>
                         </div>
+                        <Link to={'/register'} className='block w-full max-w-xs mx-auto'>
+                        <div className="w-full px-3 mb-5">
+                            <button className=" bg-gray-600 hover:bg-gray-500  text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
+                        </div>
+                        </Link>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
     );
 }
 

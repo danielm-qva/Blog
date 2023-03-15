@@ -5,7 +5,6 @@ import userRouter from './auth/infrastructure/router/user.router';
 import{ dbconnet } from './db/data-source';
 import routerPost from './post/infrastructure/router/post.router';
 import cors from 'cors';
-import { isAutorizado } from './auth/infrastructure/middleware/authHandle';
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', userRouter)
-app.use('/api', isAutorizado,routerPost)
+app.use('/api',routerPost)
 
 app.listen(PORT, () => {
      dbconnet.then().catch();

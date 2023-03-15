@@ -17,6 +17,6 @@ userRouter.delete('/user/:id',isAutorizado , controlleruser.deleteUser);
 
 //login 
 userRouter.post('/login' , controlleruser.loginUser);
-userRouter.post('/regiter' , controlleruser.createUser);
+userRouter.post('/register' , controlleruser.createUser);
 
 export default userRouter;

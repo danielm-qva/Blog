@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { notLoadginApp, setLoadingApp } from "../redux/slice/sliceApp";
 
 
-export const useFecht = (url: string) => {
+export const useFecht = (url: string , method: string ='GET') => {
   const dispacht = useDispatch();
   const loading = useSelector((store: any) => store.app.Loadingapp);
   const [error, setError] =  useState("")

@@ -2,24 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
       statusLogin : false,
-       user: {},
+       user: "",
        token: "",
        Loadingapp : false,
-
 }
 
 export const loginSlice = createSlice({
   name: "App",
   initialState,
   reducers: {
-    login: (state ,actions) => {
+    applogin: (state ,actions) => {
       state.statusLogin = true;
       state.user = actions.payload.user;
       state.token = actions.payload.token
     },
-    logout: (state) => {
+    applogout: (state) => {
       state.statusLogin = false;
-      state.user= {},
+      state.user= "",
        state.token =""
     },
     setLoadingApp: (state) => {
@@ -31,6 +30,6 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { login, logout , setLoadingApp , notLoadginApp } = loginSlice.actions;
+export const { applogin, applogout , setLoadingApp , notLoadginApp } = loginSlice.actions;
 
 export default loginSlice.reducer ;

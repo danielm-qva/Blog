@@ -6,6 +6,8 @@ import App from '../App';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import ErrorPage from '../pages/error-page';
+import Register from "../components/Register";
+import AppPost from '../components/AddPost';
 
 
 const router = createBrowserRouter([
@@ -22,6 +24,13 @@ const router = createBrowserRouter([
           {
             path: 'login',
             element: <Login />
+          },
+            {
+                path: 'register',
+                element: <Register/>
+            },
+            {path: 'addpost' ,
+              element: <AppPost/>  
           }
         ]
     },    
