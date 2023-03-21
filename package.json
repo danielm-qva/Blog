@@ -27,10 +27,13 @@
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "formik": "^2.2.9",
+    "gsap": "^3.11.4",
+    "react-gsap": "^3.2.1",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
+    "react-spinners": "^0.13.8",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.12"
   },

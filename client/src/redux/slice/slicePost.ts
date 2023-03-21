@@ -1,25 +1,31 @@
+import { createSlice } from "@reduxjs/toolkit";
 
-
-import {createSlice} from '@reduxjs/toolkit'
-
-const initialState={ 
-      listPost: [],
-      loading: false,
-}
+const initialState = {
+  listPost: [],
+  isloading: false,
+};
 
 export const slicePost = createSlice({
-       name: "Post",
-       initialState,
-       reducers: {
-         setgetAllPost: (state , actions) => {
-                state.listPost = actions.payload.list;      
-         },
-         resetState: (state) => {
-            state = initialState;
-         }
-       }
-})
+  name: "post",
+  initialState,
+  reducers: {
+    setgetAllPost: (state, actions) => {
+      state.listPost = actions.payload.list;
+      console.log(state.listPost);
+    },
+    resetState: (state) => {
+      state = initialState;
+    },
+    isloadinglist: (state) => {
+      state.isloading = true;
+    },
+    notloadinglist: (state) => {
+      state.isloading = false;
+    },
+  },
+});
 
-export const { setgetAllPost  , resetState} = slicePost.actions;
+export const { setgetAllPost, resetState, isloadinglist, notloadinglist } =
+  slicePost.actions;
 
 export default slicePost.reducer;

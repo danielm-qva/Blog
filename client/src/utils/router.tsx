@@ -8,12 +8,12 @@ import Login from '../components/Login';
 import ErrorPage from '../pages/error-page';
 import Register from "../components/Register";
 import AppPost from '../components/AddPost';
-
+import ProtectRouter from '../pages/ProtectRouter';
 
 const router = createBrowserRouter([
     { 
         path: '/',
-        element: <App/>,
+        element:  <App/>,
         errorElement: <ErrorPage />,
         children: [
           {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
                 element: <Register/>
             },
             {path: 'addpost' ,
-              element: <AppPost/>  
+              element: <ProtectRouter children={<AppPost />}/>  
           }
         ]
     },    

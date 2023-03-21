@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const JWT_SECRETE = " asdq312qwecc$$^&**@(W)@www3gbt";
+export const JWT_SECRETE = "asdq312qwecc$$^&**@(W)@www3gbt";
 
 export class JsonWebTokenGenerate {
   email: string;

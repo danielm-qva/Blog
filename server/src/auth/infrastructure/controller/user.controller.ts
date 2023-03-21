@@ -99,8 +99,9 @@ export class ControllerUser {
                if(ans !== null ) {
                 bycrypt.compare(password , ans.password).then((ass) => {
                    if(ass){
-                     const jsonwebtoken = new JsonWebTokenGenerate(ans.email , ans.email);
-                     return res.status(200).json({"toke": jsonwebtoken.GenereateToken()});
+                     const jsonwebtoken = new JsonWebTokenGenerate(ans.email, ans.name);
+                      const {email , id , name} = ans;
+                     return res.status(200).json({"toke": jsonwebtoken.GenereateToken() , 'user': {email , id , name} });
                    }
                    else {
                     res.status(404).json({'mensg' : "Ha ocurrido un Error 😢"});
@@ -108,7 +109,7 @@ export class ControllerUser {
                 })
               }
               else {
-                res.status(404).json({'mensg' : "User not fount"});
+                res.status(404).json({'mensg' : "User not fount 😢"});
               }
               }).catch(error => {
                 return res.status(404).json(error);

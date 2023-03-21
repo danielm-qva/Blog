@@ -17,8 +17,6 @@ export class Post {
   @Column()
   @IsString()
   @IsNotEmpty()
-  @Max(255)
-  @Min(10)
   description: string;
 
   @Column()

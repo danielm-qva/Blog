@@ -1,9 +1,11 @@
 import {useFormik} from "formik";
-import { notLoadginApp, setLoadingApp} from "../redux/slice/sliceApp";
+import { LoadingApp } from "../redux/slice/sliceApp";
 import {clientAxios} from "../hooks/clientAxios";
 import {useNavigate ,Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {toast} from 'react-hot-toast' ;
+
+import {Tween ,  Timeline} from 'react-gsap';
 
 function  Register() {
     const navigate = useNavigate();
@@ -12,10 +14,12 @@ function  Register() {
     const formikLogin = useFormik({
         initialValues: {name: '' ,email: ' ' , password: ''},
         onSubmit:(value) => {
-            dispach(setLoadingApp());
-            clientAxios.post('/register' , value).then(res => {    
-                navigate('/home')
-               toast.success(res.data);
+            dispach(LoadingApp());
+            clientAxios.post('/register' , value).then(res => { 
+                setTimeout(() => {
+                    navigate('/home') ;
+                    toast.success(res.data);
+                })   
           
              }).catch(error => {
                  toast.error(error.message)
@@ -26,7 +30,10 @@ function  Register() {
 
     return (
         <div className="flex items-center justify-center px-5 py-5">
-            <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-96 overflow-hidden ">
+            <Timeline target={<div className="w-[455px] h-[512px] transform rotate-6 z-auto bg-[#eeaeca] rounded-3xl overflow-hidden"> </div>}>
+            <Tween to={{rotation:174}} ></Tween>
+            </Timeline>
+            <div className="bg-gray-100 absolute text-gray-500 rounded-3xl shadow-xl w-96 overflow-hidden ">
                 <div className="md:flex w-full">
                     {/* <div className="hidden md:block w-1/2 bg-gray-400 py-6 px-6">
                         <img src="./register.jpg" className="w-full h-full" />
